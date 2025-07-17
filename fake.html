@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>보안 경고</title>
+  <style>
+    body {
+      background-color: black;
+      color: lime;
+      font-family: monospace;
+      padding: 20px;
+    }
+    .hidden {
+      display: none;
+    }
+    .center {
+      text-align: center;
+      margin-top: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div id="warning" class="center">
+    <p>⚠️ 이 링크를 신뢰하시겠습니까?</p>
+    <button onclick="startFakeHack()">OK</button>
+  </div>
+
+  <div id="hacking" class="hidden">
+    <p>접속 중...</p>
+    <p>정보 탈취 시도 중...</p>
+    <p>기기 제어 권한 확보 중...</p>
+    <p>🔓 보안 우회 완료</p>
+  </div>
+
+  <div id="reveal" class="hidden center">
+    <p>✅ 이 화면은 연출이었습니다.<br>앞으로 신뢰할 수 있는 링크만 누르세요.<br>자신도 모르게 핸드폰이 해킹될 수 있습니다.</p>
+    <button onclick="endMessage()">OK</button>
+  </div>
+
+  <div id="thanks" class="hidden center">
+    <p>🎉 활동에 참여해주셔서 감사합니다.</p>
+  </div>
+
+  <script>
+    function startFakeHack() {
+      document.getElementById('warning').style.display = 'none';
+      const hackingDiv = document.getElementById('hacking');
+      hackingDiv.classList.remove('hidden');
+
+      let messages = hackingDiv.getElementsByTagName('p');
+      let i = 0;
+
+      function showNextMessage() {
+        if (i < messages.length) {
+          messages[i].style.display = 'block';
+          i++;
+          setTimeout(showNextMessage, 800);
+        } else {
+          setTimeout(() => {
+            hackingDiv.style.display = 'none';
+            document.getElementById('reveal').classList.remove('hidden');
+          }, 1000);
+        }
+      }
+
+      for (let msg of messages) {
+        msg.style.display = 'none';
+      }
+
+      showNextMessage();
+    }
+
+    function endMessage() {
+      document.getElementById('reveal').style.display = 'none';
+      document.getElementById('thanks').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
